@@ -1012,7 +1012,11 @@ void COM_CheckRegistered (void)
 	
 	Cvar_Set ("registered", "1");
 	static_registered = 1;
-	Con_Printf ("Playing registered version.\n");
+
+	if (h != -1)
+	{
+		Con_Printf ("Playing registered version.\n");
+	}
 }
 
 

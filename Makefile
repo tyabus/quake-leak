@@ -1,120 +1,87 @@
-CC=gcc
 CFLAGS=-O2 -Wall -ffast-math -fomit-frame-pointer -fno-strength-reduce -funroll-loops
-LDFLAGS=
-LIBS=-lm
-O=linux
+LDFLAGS=-lm -lXext -lX11
 
-OUTPUT=	xquake
+OUTPUT=xquake
 
 all:	$(OUTPUT)
 
 clean:
-	rm -f *.o $(OUTPUT)
-
-%.o : %.s
-	$(CC) $(CFLAGS) -DELF -x assembler-with-cpp -c $<
-
-HEADERS = asm_draw.h client.h cmd.h common.h cvar.h d_iface.h\
-         d_local.h mathlib.h model.h modelgen.h net.h quakeasm.h\
-         quakedef.h spritegn.h zone.h crc.h net_vcr.h wad.h sbar.h\
-         world.h
+	rm -f src/*.o $(OUTPUT)
 
 PORTABLE_OBJS= \
- console.o \
- r_light.o \
- r_misc.o \
- pr_cmds.o \
- cd_null.o \
- menu.o \
- draw.o \
- cl_demo.o \
- cl_input.o \
- keys.o \
- cl_main.o \
- cl_parse.o \
- cl_tent.o \
- cmd.o \
- common.o \
- crc.o \
- cvar.o \
- d_edge.o \
- d_fill.o \
- d_init.o \
- d_modech.o \
- d_part.o \
- d_polyse.o \
- d_scan.o \
- d_sky.o \
- d_sprite.o \
- d_surf.o \
- d_zpoint.o \
- host.o \
- host_cmd.o \
- mathlib.o \
- model.o \
- net_main.o \
- net_vcr.o \
- pr_edict.o \
- pr_exec.o \
- r_aclip.o \
- r_efrag.o \
- r_alias.o \
- r_bsp.o \
- r_draw.o \
- r_edge.o \
- r_main.o \
- r_part.o \
- r_sky.o \
- r_sprite.o \
- r_surf.o \
- r_vars.o \
- sbar.o \
- screen.o \
- sv_main.o \
- sv_move.o \
- sv_phys.o \
- sv_user.o \
- view.o \
- wad.o \
- world.o \
- zone.o
+ src/console.o \
+ src/r_light.o \
+ src/r_misc.o \
+ src/pr_cmds.o \
+ src/cd_null.o \
+ src/menu.o \
+ src/draw.o \
+ src/cl_demo.o \
+ src/cl_input.o \
+ src/keys.o \
+ src/cl_main.o \
+ src/cl_parse.o \
+ src/cl_tent.o \
+ src/cmd.o \
+ src/common.o \
+ src/crc.o \
+ src/cvar.o \
+ src/d_edge.o \
+ src/d_fill.o \
+ src/d_init.o \
+ src/d_modech.o \
+ src/d_part.o \
+ src/d_polyse.o \
+ src/d_scan.o \
+ src/d_sky.o \
+ src/d_sprite.o \
+ src/d_surf.o \
+ src/d_zpoint.o \
+ src/host.o \
+ src/host_cmd.o \
+ src/mathlib.o \
+ src/model.o \
+ src/net_main.o \
+ src/net_vcr.o \
+ src/pr_edict.o \
+ src/pr_exec.o \
+ src/r_aclip.o \
+ src/r_efrag.o \
+ src/r_alias.o \
+ src/r_bsp.o \
+ src/r_draw.o \
+ src/r_edge.o \
+ src/r_main.o \
+ src/r_part.o \
+ src/r_sky.o \
+ src/r_sprite.o \
+ src/r_surf.o \
+ src/r_vars.o \
+ src/sbar.o \
+ src/screen.o \
+ src/sv_main.o \
+ src/sv_move.o \
+ src/sv_phys.o \
+ src/sv_user.o \
+ src/view.o \
+ src/wad.o \
+ src/world.o \
+ src/zone.o
 
 LINUX_OBJS= \
- d_vars.o \
- sys_linux.o \
- net_bsd.o \
- net_dgrm.o \
- net_loop.o \
- net_udp.o \
- nonintel.o \
- snd_dma.o \
- snd_mem.o \
- snd_linux.o \
- snd_mix.o \
- d_draw.o \
- d_draw16.o \
- d_parta.o \
- d_polysa.o \
- d_scana.o\
- d_spr8.o \
- math.o \
- r_aliasa.o \
- r_drawa.o \
- r_edgea.o \
- surf16.o \
- surf8.o \
- worlda.o \
- r_aclipa.o \
- snd_mixa.o \
- sys_dosa.o
-
-SLOWER_C_OBJS= \
- d_vars.o \
- snd_mix.o \
- nonintel.o
+ src/d_vars.o \
+ src/sys_linux.o \
+ src/net_bsd.o \
+ src/net_dgrm.o \
+ src/net_loop.o \
+ src/net_udp.o \
+ src/nonintel.o \
+ src/snd_dma.o \
+ src/snd_mem.o \
+ src/snd_linux.o \
+ src/snd_mix.o
 
 OBJS=$(PORTABLE_OBJS) $(LINUX_OBJS)
 
-xquake:	$(OBJS) vid_x.o
-	$(CC) $(LDFLAGS) -L/usr/X11R6/lib $(OBJS) vid_x.o -o xquake $(LIBS) -lXext -lX11
-
+xquake:	$(OBJS) src/vid_x.o
+	$(CC) -L/usr/X11R6/lib $(OBJS) src/vid_x.o -o xquake $(LDFLAGS)
