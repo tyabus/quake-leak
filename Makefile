@@ -1,4 +1,4 @@
-CFLAGS=-O2 -Wall -ffast-math -fomit-frame-pointer -fno-strength-reduce -funroll-loops
+CFLAGS=-O2 -Wall -ffast-math -fomit-frame-pointer -fno-strength-reduce -funsafe-loop-optimizations
 LDFLAGS=-lm -lXext -lX11
 
 OUTPUT=xquake
